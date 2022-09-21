@@ -1,31 +1,31 @@
 package fr.levitt.secuapi;
 
-import java.util.ArrayList;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.levitt.secuapi.core.Utilisateur;
+import fr.levitt.secuapi.sql.UtilisateurRepository;
 
 @RestController
 public class IndexController {
 
-    ArrayList<Utilisateur> list = new ArrayList();
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
 
-    @GetMapping("/add_user")
-    public void add_user() {
-        Utilisateur user = new Utilisateur();
-        user.setNom("hey");
-        user.setPrenom("hoy");
-        list.add(user);
+
+    @GetMapping("/newUser")
+    public void addRandomUser() {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNom("Toto"+Math.random());
+        utilisateur.setPrenom("Tata"+Math.random());
+        utilisateurRepository.save(utilisateur);
     }
 
-    @GetMapping("/get_user")
-    public Utilisateur get_user() {
-        String result = "";
-        return list.get(0);
+    @GetMapping("/user")
+    public Iterable<Utilisateur> getUtilisateurs() {
+        return utilisateurRepository.findAll();
     }
-
 
     @GetMapping("/")
     public Utilisateur index() {
@@ -35,5 +35,11 @@ public class IndexController {
         return utilisateur;
     }
 
+    public UtilisateurRepository getUtilisateurRepository() {
+        return utilisateurRepository;
+    }
 
+    public void setUtilisateurRepository(UtilisateurRepository utilisateurRepository) {
+        this.utilisateurRepository = utilisateurRepository;
+    }
 }
