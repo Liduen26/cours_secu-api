@@ -19,12 +19,22 @@ public class Room {
 
     private RoomType type;
 
+    private boolean reserved = false;
+
     public Room() {}
 
     public Room(RoomType type) {
         this.capacity = type.getSize();
         this.price = type.getPrice();
         this.type = type;
+    }
+
+
+    public boolean isReserved() {
+        return reserved;
+    }
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 
     public int getCapacity() {

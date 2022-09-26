@@ -41,4 +41,9 @@ public class HotelController {
                 roomRepo.save(new Room(RoomType.STANDARD));
         }
     }
+    
+    @PostMapping("hotel/add_reserv/{id}")
+    public void add_reserv(@PathVariable int id) {
+        
+    }
 }
